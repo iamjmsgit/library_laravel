@@ -37,7 +37,7 @@
                     <td>{{ $book->author }}</td>
                     <td>{{ $book->category }}</td>
                     <td>{{ $book->published_year }}</td>
-                    <td>{{ $book->created_at->format('M d, Y') }}</td>
+                    <td>{{ $book->created_at }}</td>
                     <td>
                         <button type="button" class="btn btn-sm btn-warning fw-bold text-dark" data-bs-toggle="modal" data-bs-target="#editModal{{ $book->id }}">
                             <i class="bi bi-pencil-square me-1"></i>Edit

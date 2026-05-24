@@ -24,6 +24,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Full Name</th>
                     <th scope="col">Email</th>
+                    <th scoper="col">Date Added</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -35,6 +36,7 @@
                     <td>{{ $users->id }}</td>
                     <td>{{ $users->name }}</td>
                     <td>{{ $users->email }}</td>
+                    <td>{{ $users->created_at }}</td>
                     <td>
                         <button type="button" class="btn btn-sm btn-warning fw-bold text-dark" data-bs-toggle="modal" data-bs-target="#EditModal{{ $users->id }}">
                             <i class="bi bi-pencil-square me-1"></i>Edit
