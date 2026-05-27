@@ -66,10 +66,10 @@
                         <h4>Change Password</h4>
                         <hr>
 
-                        <div class="mb-3">
+                        <div class="mb-1">
                             <label for="password" class="fw-bold">Current Password</label>
                             <div class="input-group">
-                                <input type="password" id="password" name="password"
+                                <input type="password" id="current_pass" name="current_pass"
                                     class="form-control shadow-none border border-1 border-dark"
                                     placeholder="Enter current password">
 

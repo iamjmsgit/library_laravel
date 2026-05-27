@@ -12,7 +12,7 @@
         </div>
 
         <button type="button" class="btn btn-primary fw-bold text-white" data-bs-toggle="modal" data-bs-target="#AddNewModal">
-            <i class="bi bi-person-plus-fill me-2"></i>Add New Book
+            <i class="bi bi-journal-plus me-2"></i>Add New Book
         </button>
     </div>
 
@@ -31,7 +31,7 @@
             </thead>
 
             <tbody class="table-group-divider">
-                @foreach ($books as $book)
+                @forelse ($books as $book)
                 <tr class="border-start border-end">
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author }}</td>
@@ -131,7 +131,12 @@
                     </div>
                 </div>
 
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="6" class="text-center">No records found</td>
+                </tr>
+
+                @endforelse
             </tbody>
         </table>
     </div>

@@ -92,7 +92,7 @@
                 }
             }
 
-            togglePassword("password", "togglePassword");
+            togglePassword("current_pass", "togglePassword");
             togglePassword("new_pass", "toggleNewPassword");
             togglePassword("confirm_pass", "toggleConfirmPassword");
             togglePassword("confirmpassword", "toggleConfirmPassword");

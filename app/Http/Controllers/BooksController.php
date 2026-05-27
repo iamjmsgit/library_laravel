@@ -70,12 +70,33 @@ class BooksController extends Controller
             return back()->with('error', 'Unable to update book');
         }
 
-        $books->update([
-            'title' => $request->title,
-            'author' => $request->author,
-            'category' => $request->category,
-            'published_year' => $request->published_year
-        ]);
+        $hasChanges = false;
+
+        if ($request->title != $books->title) {
+            $books->title = $request->title;
+            $hasChanges = true;
+        }
+
+        if ($request->author != $books->author) {
+            $books->author = $request->author;
+            $hasChanges = true;
+        }
+
+        if ($request->category != $books->category) {
+            $books->category = $request->category;
+            $hasChanges = true;
+        }
+
+        if ($request->published_year != $books->published_year) {
+            $books->published_year = $request->published_year;
+            $hasChanges = true;
+        }
+
+        if (!$hasChanges) {
+            return back();
+        }
+
+        $books->save();
 
         return back()->with('success', 'Book updated sucessfully!');
     }

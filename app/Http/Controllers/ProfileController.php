@@ -17,9 +17,14 @@ class ProfileController extends Controller
     {
         $user = User::find(session('user')->id);
 
-        // Upload Image if there is a value
-        if ($request->hasFile('profile_pic')) {
+        if (!$user) {
+            return back()->with('error', 'User not found!');
+        }
 
+        $hasChanges = false;
+
+        // Upload profile picture
+        if ($request->hasFile('profile_pic')) {
             $file = $request->file('profile_pic');
 
             $filename = time() . '.' . $file->getClientOriginalExtension();
@@ -27,16 +32,20 @@ class ProfileController extends Controller
             $file->move(public_path('uploads/images'), $filename);
 
             $user->profile_pic = $filename;
+
+            $hasChanges = true;
         }
 
-        // Only update name if the input exists
-        if ($request->has('fullname')) {
+        // Update fullname only if the input exists and has value
+        if ($request->filled('fullname') && $request->fullname != $user->name) {
             $user->name = $request->fullname;
+
+            $hasChanges = true;
         }
 
-        // Select * from users where email = '$email'
-        // This checks if email already exists except the current user
-        if ($request->has('email')) {
+        // Update email only if the input exists and has value
+        if ($request->filled('email') && $request->email != $user->email) {
+
             if (User::where('email', $request->email)
                 ->where('id', '!=', $user->id)
                 ->exists()
@@ -45,16 +54,39 @@ class ProfileController extends Controller
             }
 
             $user->email = $request->email;
+
+            $hasChanges = true;
         }
 
-        // Change password if new password has value
-        if ($request->filled('new_pass') || $request->filled('confirm_pass')) {
+        // Change password only if password fields have value
+        if ($request->filled('current_pass') || $request->filled('new_pass') || $request->filled('confirm_pass')) {
+            if (!$request->filled('current_pass')) {
+                return back()->with('error', 'Current password is required!');
+            }
+
+            if (!Hash::check($request->current_pass, $user->password)) {
+                return back()->with('error', 'Current password is incorrect!');
+            }
+
+            if (!$request->filled('new_pass')) {
+                return back()->with('error', 'New password is required!');
+            }
+
+            if (!$request->filled('confirm_pass')) {
+                return back()->with('error', 'Confirm password is required!');
+            }
 
             if ($request->new_pass !== $request->confirm_pass) {
                 return back()->with('error', 'Passwords do not match!');
             }
 
             $user->password = Hash::make($request->new_pass);
+            $hasChanges = true;
+        }
+
+        // If nothing changed, no toast
+        if (!$hasChanges) {
+            return back();
         }
 
         $user->save();

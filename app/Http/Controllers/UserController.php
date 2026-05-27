@@ -43,15 +43,38 @@ class UserController extends Controller
             return back()->with('error', 'User not found!');
         }
 
-        if ($request->password && $request->password !== $request->confirmpassword) {
-            return back()->with('error', 'Passwords do not match!');
+        $hasChanges = false;
+
+        if ($request->fullname != $user->name) {
+            $user->name = $request->fullname;
+            $hasChanges = true;
         }
 
-        $user->name = $request->fullname;
-        $user->email = $request->email;
+        if ($request->email != $user->email) {
 
-        if ($request->password) {
+            if (User::where('email', $request->email)
+                ->where('id', '!=', $user->id)
+                ->exists()
+            ) {
+                return back()->with('error', 'Email already exists!');
+            }
+
+            $user->email = $request->email;
+            $hasChanges = true;
+        }
+
+        if ($request->filled('password') || $request->filled('confirmpassword')) {
+
+            if ($request->password !== $request->confirmpassword) {
+                return back()->with('error', 'Passwords do not match!');
+            }
+
             $user->password = Hash::make($request->password);
+            $hasChanges = true;
+        }
+
+        if (!$hasChanges) {
+            return back();
         }
 
         $user->save();
@@ -59,17 +82,17 @@ class UserController extends Controller
         return back()->with('success', 'User updated successfully!');
     }
 
-    public function delete($id) {
-        
+    public function delete($id)
+    {
+
         $user = User::find($id);
 
-        if(!$user){
+        if (!$user) {
             return back()->with('error', 'User not found!');
         }
 
         $user->delete();
 
         return back()->with('success', 'User deleted sucessfully!');
-
     }
 }

@@ -4,7 +4,7 @@
 
 @section('content')
 <h2>Library Dashboard</h2>
-<p class="text-muted">Manage books, users, and borrowed records here.</p>
+<p class="text-muted">View the total number of users and books.</p>
 
 <div class="row mt-4">
     <div class="col-md-6">

@@ -31,7 +31,7 @@
 
             <tbody class="table-group-divider">
 
-                @foreach($user as $users)
+                @forelse($user as $users)
                 <tr class="border-start border-end">
                     <td>{{ $users->id }}</td>
                     <td>{{ $users->name }}</td>
@@ -47,6 +47,7 @@
                         </button>
                     </td>
                 </tr>
+
 
                 <!-- Edit Btn Modal -->
                 <div class="modal fade" id="EditModal{{ $users->id }}" tabindex="-1" aria-labelledby="EditBtnModalLabel"
@@ -121,8 +122,12 @@
                     </div>
                 </div>
 
+                @empty
+                <tr>
+                    <td colspan="5" class="text-center">No records found</td>
+                </tr>
 
-                @endforeach
+                @endforelse
             </tbody>
         </table>
     </div>
