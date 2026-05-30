@@ -62,42 +62,27 @@ class BooksController extends Controller
             'published_year' => 'required',
         ]);
 
-        $books = Books::where('id', $id)
+        $book = Books::where('id', $id)
             ->where('user_id', session('user')->id)
             ->first();
 
-        if (!$books) {
+        if (!$book) {
             return back()->with('error', 'Unable to update book');
         }
 
-        $hasChanges = false;
+        $book->fill([
+            'title' => $request->title,
+            'author' => $request->author,
+            'category' => $request->category,
+            'published_year' => $request->published_year,
+        ]);
 
-        if ($request->title != $books->title) {
-            $books->title = $request->title;
-            $hasChanges = true;
-        }
-
-        if ($request->author != $books->author) {
-            $books->author = $request->author;
-            $hasChanges = true;
-        }
-
-        if ($request->category != $books->category) {
-            $books->category = $request->category;
-            $hasChanges = true;
-        }
-
-        if ($request->published_year != $books->published_year) {
-            $books->published_year = $request->published_year;
-            $hasChanges = true;
-        }
-
-        if (!$hasChanges) {
+        if (!$book->isDirty()) {
             return back();
         }
 
-        $books->save();
+        $book->save();
 
-        return back()->with('success', 'Book updated sucessfully!');
+        return back()->with('success', 'Book updated successfully!');
     }
 }

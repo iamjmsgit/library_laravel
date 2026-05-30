@@ -25,7 +25,7 @@
                     <input class="form-control mb-2 shadow-none border border-1 border-dark"
                         type="file" id="formFile" name="profile_pic" required>
 
-                    <button type="submit" class="btn btn-warning w-100" name="upload_pic">
+                    <button type="submit" class="btn btn-warning w-100 fw-bold" name="upload_pic">
                         Upload Photo
                     </button>
                 </form>
@@ -58,6 +58,33 @@
                                 class="form-control shadow-none border border-1 border-dark"
                                 placeholder="Enter Email address"
                                 value="{{ session('user')->email }}">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="phone_number" class="fw-bold">Phone Number</label>
+                            <input id="phone_number" name="phone_number" type="tel"
+                                class="form-control shadow-none border border-1 border-dark"
+                                placeholder="Enter phone number"
+                                value="{{ session('user')->phone_number }}">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="gender" class="fw-bold">Gender</label>
+                            <select id="gender" name="gender"
+                                class="form-select shadow-none border border-1 border-dark">
+                                <option value="">Select gender</option>
+                                <option value="Male" {{ session('user')->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                                <option value="Female" {{ session('user')->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                                <option value="Other" {{ session('user')->gender == 'Other' ? 'selected' : '' }}>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="address" class="fw-bold">Address</label>
+                            <input id="address" name="address" type="text"
+                                class="form-control shadow-none border border-1 border-dark"
+                                placeholder="Enter address"
+                                value="{{ session('user')->address }}">
                         </div>
                     </div>
 
@@ -112,8 +139,7 @@
                     </div>
 
                     <div class="mt-4">
-                        <button type="submit" class="btn btn-warning">Save Changes</button>
-                        <a href="/dashboard" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-warning fw-bold">Save Changes</button>
                     </div>
 
                 </form>

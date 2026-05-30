@@ -65,6 +65,12 @@
             background-color: #ffc107;
             color: #000000;
         }
+
+        .chart-box {
+            position: relative;
+            height: 230px;
+            width: 100%;
+        }
     </style>
 </head>
 

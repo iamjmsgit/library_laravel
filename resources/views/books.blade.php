@@ -37,7 +37,7 @@
                     <td>{{ $book->author }}</td>
                     <td>{{ $book->category }}</td>
                     <td>{{ $book->published_year }}</td>
-                    <td>{{ $book->created_at }}</td>
+                    <td>{{ $book->created_at->format('M d, Y') }}</td>
                     <td>
                         <button type="button" class="btn btn-sm btn-warning fw-bold text-dark" data-bs-toggle="modal" data-bs-target="#editModal{{ $book->id }}">
                             <i class="bi bi-pencil-square me-1"></i>Edit
@@ -112,9 +112,16 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <input name="category" type="text"
-                                            class="form-control shadow-none border border-1 border-dark"
-                                            value="{{ $book->category }}" required>
+                                        <select name="category" class="form-select shadow-none border border-1 border-dark" required>
+                                            <option value="">Select Category</option>
+                                            <option value="Fiction" {{ $book->category == 'Fiction' ? 'selected' : '' }}>Fiction</option>
+                                            <option value="Science" {{ $book->category == 'Science' ? 'selected' : '' }}>Science</option>
+                                            <option value="History" {{ $book->category == 'History' ? 'selected' : '' }}>History</option>
+                                            <option value="Programming" {{ $book->category == 'Programming' ? 'selected' : '' }}>Programming</option>
+                                            <option value="Education" {{ $book->category == 'Education' ? 'selected' : '' }}>Education</option>
+                                            <option value="Novel" {{ $book->category == 'Novel' ? 'selected' : '' }}>Novel</option>
+                                            <option value="Other" {{ $book->category == 'Other' ? 'selected' : '' }}>Other</option>
+                                        </select>
                                     </div>
 
                                     <div class="mb-3">
@@ -167,8 +174,16 @@
                         </div>
 
                         <div class="mb-3">
-                            <input name="category" type="text" class="form-control shadow-none border border-1 border-dark"
-                                placeholder="Enter Category" required>
+                            <select name="category" class="form-select shadow-none border border-1 border-dark" required>
+                                <option value="">Select Category</option>
+                                <option value="Fiction">Fiction</option>
+                                <option value="Science">Science</option>
+                                <option value="History">History</option>
+                                <option value="Programming">Programming</option>
+                                <option value="Education">Education</option>
+                                <option value="Novel">Novel</option>
+                                <option value="Other">Other</option>
+                            </select>
                         </div>
 
                         <div class="mb-3">

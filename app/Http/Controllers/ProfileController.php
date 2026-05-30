@@ -58,6 +58,24 @@ class ProfileController extends Controller
             $hasChanges = true;
         }
 
+        // Update phone number
+        if ($request->filled('phone_number') && $request->phone_number != $user->phone_number) {
+            $user->phone_number = $request->phone_number;
+            $hasChanges = true;
+        }
+
+        // Update gender
+        if ($request->filled('gender') && $request->gender != $user->gender) {
+            $user->gender = $request->gender;
+            $hasChanges = true;
+        }
+
+        // Update address
+        if ($request->filled('address') && $request->address != $user->address) {
+            $user->address = $request->address;
+            $hasChanges = true;
+        }
+
         // Change password only if password fields have value
         if ($request->filled('current_pass') || $request->filled('new_pass') || $request->filled('confirm_pass')) {
             if (!$request->filled('current_pass')) {

@@ -36,7 +36,7 @@
                     <td>{{ $users->id }}</td>
                     <td>{{ $users->name }}</td>
                     <td>{{ $users->email }}</td>
-                    <td>{{ $users->created_at }}</td>
+                    <td>{{ $users->created_at->format('M d, Y') }}</td>
                     <td>
                         <button type="button" class="btn btn-sm btn-warning fw-bold text-dark" data-bs-toggle="modal" data-bs-target="#EditModal{{ $users->id }}">
                             <i class="bi bi-pencil-square me-1"></i>Edit

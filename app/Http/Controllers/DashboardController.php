@@ -9,11 +9,17 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     //
-    public function showDashboard(){
-        
+    public function showDashboard()
+    {
+
         $usercount = User::count();
         $bookcount = Books::count();
 
-        return view('dashboard', compact('usercount', 'bookcount'));
+        $booksByCategory = Books::select('category')
+            ->selectRaw('COUNT(*) as total')
+            ->groupBy('category')
+            ->get();
+
+        return view('dashboard', compact('usercount', 'bookcount', 'booksByCategory'));
     }
 }

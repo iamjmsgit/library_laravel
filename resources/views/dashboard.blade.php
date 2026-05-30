@@ -29,7 +29,25 @@
 <div class="row mt-4">
 
     <div class="col-md-6">
-        <canvas id="myChart"></canvas>
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold">System Data</h5>
+                <div class="chart-box">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="fw-bold">Books by Category</h5>
+                <div class="chart-box">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -37,20 +55,51 @@
 
 @section('scripts')
 <script>
-const ctx = document.getElementById('myChart');
+    const ctx = document.getElementById('myChart');
 
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Users', 'Books'],
-        datasets: [{
-            label: 'System Data',
-            data: [{{ $usercount }}, {{ $bookcount }}],
-            backgroundColor: ['#ffc107', '#212529'],
-            borderColor: ['#ffc107', '#212529'],
-            borderWidth: 1
-        }]
-    }
-});
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Users', 'Books'],
+            datasets: [{
+                label: 'System Data',
+                data: [{{ $usercount }}, {{ $bookcount }}],
+                backgroundColor: ['#ffc107', '#212529'],
+                borderColor: ['#ffc107', '#212529'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    const categoryCtx = document.getElementById('categoryChart');
+
+    new Chart(categoryCtx, {
+        type: 'doughnut',
+        data: {
+            labels: @json($booksByCategory->pluck('category')),
+            datasets: [{
+                label: 'Books by Category',
+                data: @json($booksByCategory->pluck('total')),
+                backgroundColor: [
+                    '#ffc107',
+                    '#212529',
+                    '#0d6efd',
+                    '#198754',
+                    '#dc3545',
+                    '#6f42c1',
+                    '#795548'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
 </script>
 @endsection
